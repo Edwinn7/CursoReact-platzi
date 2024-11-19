@@ -19,6 +19,10 @@
   --transition-speed: 0.3s;
   --shadow-color-light: rgba(0, 0, 0, 0.1);
   --shadow-color-dark: rgba(255, 255, 255, 0.1);
+  --modal-bg: white;
+  --modal-text-color: black;
+  --font-family: 'Poppins', sans-serif;
+  --primary-hover: #004aad;
 }
 
 /* Global Styles */
@@ -55,7 +59,7 @@ body.dark-mode {
   transform: translateY(-5px);
 }
 
-.dark .todo-container {
+body.dark-mode .todo-container {
   background-color: var(--item-bg-dark);
   box-shadow: 0 10px 30px var(--shadow-color-dark);
 }
@@ -148,11 +152,11 @@ body.dark-mode {
 }
 
 /* Dark Mode Button Styles */
-.dark .complete-button {
+body.dark-mode .complete-button {
   background-color: var(--item-bg-dark);
 }
 
-.dark .delete-button {
+body.dark-mode .delete-button {
   background-color: #800000;
 }
 
@@ -178,17 +182,17 @@ body.dark-mode {
   transform: translateX(5px);
 }
 
-.todo-item.completada .todo-text{
+.todo-item.completada .todo-text {
   background-color: var(--completed-bg);
   text-decoration: line-through;
 }
 
-.dark .todo-item {
+body.dark-mode .todo-item {
   background-color: var(--item-bg-dark);
   border-color: var(--border-color-dark);
 }
 
-.dark .todo-item.completada {
+body.dark-mode .todo-item.completada {
   background-color: var(--completed-bg-dark);
 }
 
@@ -210,43 +214,43 @@ body.dark-mode {
   transition: width 0.5s ease-in-out;
 }
 
-.dark .progress-bar {
+body.dark-mode .progress-bar {
   background-color: var(--completed-bg-dark);
 }
 
-.dark .progress-bar-fill {
+body.dark-mode .progress-bar-fill {
   background-color: var(--success-color);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .todo-container {
-      padding: 20px;
+    padding: 20px;
   }
 
   .todo-header h1 {
-      font-size: 1.5rem;
+    font-size: 1.5rem;
   }
 
   .todo-item {
-      flex-direction: column;
-      align-items: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .todo-buttons {
-      margin-top: 10px;
-      align-self: flex-end;
+    margin-top: 10px;
+    align-self: flex-end;
   }
 }
 
 /* Animations */
 @keyframes fadeIn {
   from {
-      opacity: 0;
+    opacity: 0;
   }
 
   to {
-      opacity: 1;
+    opacity: 1;
   }
 }
 
@@ -256,23 +260,23 @@ body.dark-mode {
 
 @keyframes progressAnimation {
   0% {
-      background-position: 0 0;
+    background-position: 0 0;
   }
 
   100% {
-      background-position: 50px 50px;
+    background-position: 50px 50px;
   }
 }
 
 .progress-bar-fill {
   background-image: linear-gradient(45deg,
-          rgba(255, 255, 255, 0.15) 25%,
-          transparent 25%,
-          transparent 50%,
-          rgba(255, 255, 255, 0.15) 50%,
-          rgba(255, 255, 255, 0.15) 75%,
-          transparent 75%,
-          transparent);
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent);
   background-size: 50px 50px;
   animation: progressAnimation 2s linear infinite;
 }
@@ -299,13 +303,12 @@ body.dark-mode {
   outline: none;
 }
 
-.dark .search-input {
+body.dark-mode .search-input {
   background-color: var(--item-bg-dark);
   color: var(--text-dark);
   border-color: var(--border-color-dark);
 }
 
-/* Estilos para el formulario de nueva tarea */
 .todo-form {
   display: flex;
   justify-content: center;
@@ -344,12 +347,78 @@ body.dark-mode {
   background-color: var(--primary-color-hover);
 }
 
-.dark .new-task-input {
+body.dark-mode .new-task-input {
   background-color: var(--item-bg-dark);
   color: var(--text-dark);
   border-color: var(--border-color-dark);
 }
 
-.dark .add-task-btn {
-  background-color: var(--primary-color-dark);
+body.dark-mode .add-task-btn {
+  background-color: var(--primary-hover);
+}
+
+/* Estilos generales para el modal */
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: var(--modal-bg); /* Fondo del modal */
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.modal-content h3 {
+  color: var(--modal-text-color); /* Color del texto en el modal */
+}
+
+.modal-content button {
+  margin: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-content button:first-child {
+  background-color: #4CAF50; /* Color para el botón "Sí" */
+  color: white;
+}
+
+.modal-content button:last-child {
+  background-color: #f44336; /* Color para el botón "No" */
+  color: white;
+}
+
+/* Modo oscuro */
+body.dark-mode .modal-content {
+  background-color: #333;
+}
+
+body.dark-mode .modal-content h3 {
+  color: #fff;
+}
+
+body.dark-mode .modal-content button {
+  color: #fff;
+}
+
+body.dark-mode .modal-content button:first-child {
+  background-color: #45a049;
+}
+
+body.dark-mode .modal-content button:last-child {
+  background-color: #e53935;
 }
