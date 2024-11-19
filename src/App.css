@@ -1,38 +1,355 @@
-.App {
-  text-align: center;
+:root {
+  --font-family: 'Poppins', sans-serif;
+  --bg-light: #f5f5f5;
+  --bg-dark: #181818;
+  --text-light: #333;
+  --text-dark: #f5f5f5;
+  --primary-color: #007bff;
+  --primary-hover: #0056b3;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #ff4d4d;
+  --danger-hover: #cc0000;
+  --completed-bg: #e0e0e0;
+  --completed-bg-dark: #333;
+  --item-bg-light: #fff;
+  --item-bg-dark: #444;
+  --border-color: #ddd;
+  --border-color-dark: #666;
+  --transition-speed: 0.3s;
+  --shadow-color-light: rgba(0, 0, 0, 0.1);
+  --shadow-color-dark: rgba(255, 255, 255, 0.1);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Global Styles */
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  margin: 0;
+  padding: 20px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  min-height: 100vh;
+}
+
+body.dark-mode {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+/* Main Container */
+.todo-container {
+  background-color: var(--item-bg-light);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px var(--shadow-color-light);
+  width: 100%;
+  max-width: 600px;
+  transition: background-color var(--transition-speed), transform var(--transition-speed);
+}
+
+.todo-container:hover {
+  transform: translateY(-5px);
+}
+
+.dark .todo-container {
+  background-color: var(--item-bg-dark);
+  box-shadow: 0 10px 30px var(--shadow-color-dark);
+}
+
+/* Header Styles */
+.todo-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.todo-header h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  position: relative;
+  display: inline-block;
+}
+
+.todo-header h1::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--primary-color);
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.todo-header h1:hover::after {
+  transform: scaleX(1);
+}
+
+.toggle-mode {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 10px;
+  transition: background-color var(--transition-speed), transform 0.2s;
+}
+
+.toggle-mode:hover {
+  background-color: var(--primary-hover);
+  transform: scale(1.05);
+}
+
+/* Task Buttons */
+.todo-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.complete-button,
+.delete-button {
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color var(--transition-speed), transform 0.2s;
+}
+
+.complete-button {
+  background-color: var(--success-color);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.complete-button:hover {
+  background-color: var(--success-hover);
+  transform: scale(1.1);
 }
 
-@keyframes App-logo-spin {
+.complete-button.completada {
+  background-color: #6c757d;
+}
+
+.delete-button {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: var(--danger-hover);
+  transform: scale(1.1);
+}
+
+/* Dark Mode Button Styles */
+.dark .complete-button {
+  background-color: var(--item-bg-dark);
+}
+
+.dark .delete-button {
+  background-color: #800000;
+}
+
+/* Task List */
+.todo-list {
+  list-style: none;
+  padding: 0;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: var(--item-bg-light);
+  border: 2px solid var(--border-color);
+  margin-bottom: 10px;
+  transition: background-color var(--transition-speed), transform 0.2s;
+}
+
+.todo-item:hover {
+  transform: translateX(5px);
+}
+
+.todo-item.completada .todo-text{
+  background-color: var(--completed-bg);
+  text-decoration: line-through;
+}
+
+.dark .todo-item {
+  background-color: var(--item-bg-dark);
+  border-color: var(--border-color-dark);
+}
+
+.dark .todo-item.completada {
+  background-color: var(--completed-bg-dark);
+}
+
+/* Progress Bar */
+.progress-bar {
+  background-color: var(--completed-bg);
+  border-radius: 10px;
+  height: 12px;
+  width: 100%;
+  margin: 20px 0;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  background-color: var(--success-color);
+  height: 100%;
+  width: 0;
+  border-radius: 10px;
+  transition: width 0.5s ease-in-out;
+}
+
+.dark .progress-bar {
+  background-color: var(--completed-bg-dark);
+}
+
+.dark .progress-bar-fill {
+  background-color: var(--success-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .todo-container {
+      padding: 20px;
+  }
+
+  .todo-header h1 {
+      font-size: 1.5rem;
+  }
+
+  .todo-item {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .todo-buttons {
+      margin-top: 10px;
+      align-self: flex-end;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
   from {
-    transform: rotate(0deg);
+      opacity: 0;
   }
+
   to {
-    transform: rotate(360deg);
+      opacity: 1;
   }
+}
+
+.todo-item {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes progressAnimation {
+  0% {
+      background-position: 0 0;
+  }
+
+  100% {
+      background-position: 50px 50px;
+  }
+}
+
+.progress-bar-fill {
+  background-image: linear-gradient(45deg,
+          rgba(255, 255, 255, 0.15) 25%,
+          transparent 25%,
+          transparent 50%,
+          rgba(255, 255, 255, 0.15) 50%,
+          rgba(255, 255, 255, 0.15) 75%,
+          transparent 75%,
+          transparent);
+  background-size: 50px 50px;
+  animation: progressAnimation 2s linear infinite;
+}
+
+/* Estilos para el campo de búsqueda */
+.todo-search {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color var(--transition-speed);
+}
+
+.search-input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+.dark .search-input {
+  background-color: var(--item-bg-dark);
+  color: var(--text-dark);
+  border-color: var(--border-color-dark);
+}
+
+/* Estilos para el formulario de nueva tarea */
+.todo-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.new-task-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-right: 10px;
+  transition: border-color var(--transition-speed);
+}
+
+.new-task-input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+.add-task-btn {
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color var(--transition-speed);
+}
+
+.add-task-btn:hover {
+  background-color: var(--primary-color-hover);
+}
+
+.dark .new-task-input {
+  background-color: var(--item-bg-dark);
+  color: var(--text-dark);
+  border-color: var(--border-color-dark);
+}
+
+.dark .add-task-btn {
+  background-color: var(--primary-color-dark);
 }
